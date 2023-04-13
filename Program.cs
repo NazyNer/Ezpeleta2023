@@ -8,7 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
-    
+// cadena de coneccion con contexto nuevo
+var connectionStringEzpeleta = builder.Configuration.GetConnectionString("Ezpeleta2023DbContext");
+builder.Services.AddDbContext<Ezpeleta2023DbContext>(options =>
+    options.UseSqlServer(connectionStringEzpeleta));
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
