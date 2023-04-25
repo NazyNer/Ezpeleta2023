@@ -2,12 +2,15 @@ html {
   font-size: 14px;
 }
 .fondo{
-  background-image: url(../img/a6oihs_e68141039e4f7d05453bb0c3f4df932f5bc0c5de.jpg);
+  background-image: url(../img/fondo.jpg);
+  background-size: cover;
+  background-position: 40%;
   width: 100vw;
   height: 100vh;
   position: fixed;
   left: 0;
   top: 0;
+  z-index: -1;
 }
 footer{
   background-color: white;
@@ -18,12 +21,11 @@ hr.hr-style{
   border: 0;
 }
 .fondo-user{
-  background-color: rgb(245, 245, 245);
-  background-image: linear-gradient(190deg, rgb(255, 255, 255), rgb(255, 255, 255), rgba(117, 140, 189, 0.7));
+  background-color: rgba(245, 245, 245, 0.2);
+  background-image: linear-gradient(190deg, rgba(255, 255, 255,0.5), rgba(255, 255, 255, 0.4), rgba(117, 140, 189, 0.3));
   border-radius: 15% 10% 15% 10%;
   border: 2px solid purple;
-  box-shadow: 1px 1px 150px 10px purple;
-  height: 420px;
+  height: 385px;
 }
 .btn_primary{
   background-color: rgb(101, 41, 158);
@@ -34,6 +36,7 @@ hr.hr-style{
 }
 .MiddleLogIn a {
   color: black;
+  position: relative;
 }
 .MiddleLogIn{
   position: relative;
@@ -45,6 +48,34 @@ hr.hr-style{
   border: 1px solid purple;
   border-radius: 15px;
 }
+.footer{
+  position: fixed;
+  height: 9vh;
+  bottom:0;
+  width: 100vw;
+  background-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 1px 1px 150px 10px rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+}
+.navbar-light{
+  background-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 1px 1px 150px 10px rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+}
+.nav-item{
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 12px;
+  margin: 4px;
+  border: 2px solid purple;
+  z-index: 4;
+}
+.nav-item:hover{
+  box-shadow: 1px 1px 150px 10px purple;
+  z-index: 3;
+}
+.navbar-nav .nav-link{
+  padding-left: 14px;
+}
 @media (min-width: 768px) and (max-width: 992px){
   html {
     font-size: 16px;  
@@ -54,6 +85,7 @@ hr.hr-style{
     padding: 2%;
     border-radius: 0px;
     width: 70%;
+    height: 450px;
   }
 }
 @media (min-width: 992px) and (max-width: 1439px){
@@ -61,6 +93,8 @@ hr.hr-style{
     font-size: 16px;
     margin-top: 4%;
     padding: 2%;
+    height: 450px;
+    box-shadow: 1px 1px 150px 10px purple;
   }
   .btn_primary{
     margin-top: 5%
@@ -71,6 +105,8 @@ hr.hr-style{
     font-size: 16px;
     margin-top: 8%;
     padding: 2%;
+    height: 450px;
+    box-shadow: 1px 1px 150px 10px purple;
   }
   .btn_primary{
     margin-top: 5%

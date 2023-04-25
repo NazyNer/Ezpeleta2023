@@ -1,0 +1,58 @@
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!-- Modal -->
+<div class="modal fade" id="ModalSubCategoria" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregar Categoria</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="SubCategoriaID" value="0" />
+        <input type="hidden" id="categoriaID" value="0" />
+        <div>
+            <label class="control-label">SubCategoria</label>
+            <input type="text" class="form-control" id="Descripcion" autocomplete="off"/>
+            <label class="control-label">Categoria</label>
+            @Html.DropDownList("CategoriaID", null, htmlAttributes: new { @class = "form-control" })
+            <label style="color: red;" id="Label-Error" ></label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <input id="btnGuardar" type="button" onclick="GuardarSubCategoria()" class="btn btn-primary" value="Guardar Cambios" />
+        <input id="btnEliminar" type="button" onclick="eliminarSubCategoria()" class="btn btn-danger" value="Desabilitar" />
+        <input id="btnHabilitar" type="button" onclick="eliminarSubCategoria()" class="btn btn-success" value="Habilitar" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+    <h1 class="display-4">SubCategorias</h1>
+
+      <!-- Button trigger modal -->
+      <div class="mb-2">
+        <button type="button" onclick="VaciarFormulario()" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalSubCategoria">
+            Nuevo
+        </button>
+      </div>
+
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+        <tr>
+            <th>SubCategoria</th>
+            <th>Categoria</th>
+        </tr>
+    </thead>
+        <tbody id="tbody-sub-categorias">        
+        </tbody>
+  </table>
+</div>
+
+@section Scripts{
+    <script src="~/js/subCategoria-1.0.0.js"></script>
+}

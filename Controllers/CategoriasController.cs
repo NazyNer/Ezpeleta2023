@@ -61,4 +61,25 @@ public class CategoriasController : Controller
         }
         return Json(resultado);
     }
+    public JsonResult eliminarCategoria(int categoriaID){
+        bool resultado = false;
+            //SI ES DISTINTO A 0 QUIERE DECIR QUE ESTA ELIMINANDO LA CATEGORIA
+            if(categoriaID != 0)
+            {
+                //BUSCAMOS EN LA TABLA SI EXISTE UNA CON LA MISMO ID
+                var categoriaOriginal = _context.Categorias.Find(categoriaID);
+                //SI LA CATEGORIA NO ESTE ELIMINADA PROCEDEMOS A HACERLO
+                if(categoriaOriginal?.Eliminado == false)
+                {
+                    categoriaOriginal.Eliminado = true;
+                    _context.SaveChanges();
+                    resultado = true;
+                }else{
+                    categoriaOriginal.Eliminado = false;
+                    _context.SaveChanges();
+                    resultado = true;
+                }
+            }
+            return Json(resultado);
+            }
 }
