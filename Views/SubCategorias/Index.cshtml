@@ -15,7 +15,7 @@
         <input type="hidden" id="categoriaID" value="0" />
         <div>
             <label class="control-label">SubCategoria</label>
-            <input type="text" class="form-control" id="Descripcion" autocomplete="off"/>
+            <input type="text" class="form-control" id="Descripcion" autocomplete="off" onkeyup="this.value = this.value.toUpperCase()"/>
             <label class="control-label">Categoria</label>
             @Html.DropDownList("CategoriaID", null, htmlAttributes: new { @class = "form-control" })
             <label style="color: red;" id="Label-Error" ></label>
@@ -24,8 +24,9 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
         <input id="btnGuardar" type="button" onclick="GuardarSubCategoria()" class="btn btn-primary" value="Guardar Cambios" />
-        <input id="btnEliminar" type="button" onclick="eliminarSubCategoria()" class="btn btn-danger" value="Desabilitar" />
-        <input id="btnHabilitar" type="button" onclick="eliminarSubCategoria()" class="btn btn-success" value="Habilitar" />
+        <input id="btnDesabilitar" type="button" onclick="desabilitarSubCategoria()" class="btn btn-danger" value="Desabilitar" />
+        <input id="btnHabilitar" type="button" onclick="desabilitarSubCategoria()" class="btn btn-success" value="Habilitar" />
+        <input id="btnEliminar" type="button" onclick="eliminarSubCategoria()" class="btn btn-warning" value="Eliminar" />
       </div>
     </div>
   </div>

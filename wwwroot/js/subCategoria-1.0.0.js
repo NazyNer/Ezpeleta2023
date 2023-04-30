@@ -2,7 +2,7 @@ window.onload = BuscarSubCategorias();
 
 function BuscarSubCategorias() {
     $("#tbody-sub-categorias").empty();
-
+    $("#btnDesabilitar").hide();
     $("#btnEliminar").hide();
     $("#btnGuardar").show();
     $.ajax({
@@ -53,6 +53,7 @@ function BuscarSubCategorias() {
 function VaciarFormulario() {
     $("#Descripcion").val('');
     $("#SubCategoriaID").val(0);
+    $("#btnDesabilitar").hide();
     $("#btnEliminar").hide();
     $("#btnHabilitar").hide();
     $("#Descripcion").prop('disabled', false);
@@ -77,7 +78,8 @@ function BuscarSubCategoria(subCategoriaID) {
                 $("#SubCategoriaID").val(SubCategoria.subCategoriaID);
                 $("#categoriaID").val(SubCategoria.categoriaID);
                 if (!SubCategoria.subEliminado) {
-                    $("#btnEliminar").show();
+                    $("#btnEliminar").hide();
+                    $("#btnDesabilitar").show();
                     $("#btnGuardar").show();
                     $("#btnHabilitar").hide();
                 }
@@ -86,7 +88,8 @@ function BuscarSubCategoria(subCategoriaID) {
                     $("#Descripcion").prop('disabled', true);
                     $("#btnHabilitar").show();
                     $("#btnGuardar").hide();
-                    $("#btnEliminar").hide();
+                    $("#btnDesabilitar").hide();
+                    $("#btnEliminar").show();
                 }
                 $("#ModalSubCategoria").modal("show");
             }
@@ -114,7 +117,7 @@ function GuardarSubCategoria() {
         //url para la peticion
         url: "../../SubCategorias/GuardarSubCategoria",
         //info a enviar
-        data: { subCategoriaId: subCategoriaID, descripcion: Descripcion, categoriaID: categoriaID },
+        data: { subCategoriaId: subCategoriaID, descripcion: Descripcion.toUpperCase(), categoriaID: categoriaID },
         // especifica petición POST
         type: "POST",
         // el tipo de información que se espera de respuesta
@@ -128,6 +131,40 @@ function GuardarSubCategoria() {
             else {
                 $("#Label-Error").text("Existe una Categoría con la misma descripción.")
             }
+        }
+    });
+}
+function desabilitarSubCategoria() {
+    //JAVASCRIPT
+    let subCategoriaID = $("#SubCategoriaID").val();
+    let categoriaID = $("#categoriaID").val();
+    $.ajax({
+        // la URL para la petición
+        url: '../../SubCategorias/desabilitarSubCategoria',
+        // la información a enviar
+        // (también es posible utilizar una cadena de datos)
+        data: { subCategoriaID : subCategoriaID, categoriaID: categoriaID },
+        // especifica si será una petición POST o GET
+        type: 'POST',
+        // el tipo de información que se espera de respuesta
+        dataType: 'json',
+        // código a ejecutar si la petición es satisfactoria;
+        // la respuesta es pasada como argumento a la función
+        success: function (resultado) {
+            if (resultado) {
+                $("#ModalSubCategoria").modal("hide");
+                BuscarSubCategorias();
+            }
+            else {
+                $("#ModalSubCategoria").modal("hide");
+                BuscarSubCategorias();
+            }
+        },
+        // código a ejecutar si la petición falla;
+        // son pasados como argumentos a la función
+        // el objeto de la petición en crudo y código de estatus de la petición
+        error: function (xhr, status) {
+            $("#Label-Error").text('Disculpe, existió un problema');
         }
     });
 }
@@ -165,6 +202,7 @@ function eliminarSubCategoria() {
         }
     });
 }
+
 function EditarSubCategoria(subCategoriaID) {
     $("#CategoriaID").prop('disabled', true);
     $("#Descripcion").prop('disabled', false);

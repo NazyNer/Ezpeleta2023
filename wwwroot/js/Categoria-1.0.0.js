@@ -37,7 +37,7 @@ function BuscarCategorias() {
         // son pasados como argumentos a la función
         // el objeto de la petición en crudo y código de estatus de la petición
         error: function (xhr, status) {
-            alert('Error al cargar categorias');
+            $("#errorTable").text('Error al cargar categorias');
         },
         // código a ejecutar sin importar si la petición falló o no
         complete: function (xhr, status) {
@@ -46,6 +46,7 @@ function BuscarCategorias() {
     });
 }
 function VaciarFormulario() {
+    $("#lbl-error").text("");
     $("#Descripcion").val('');
     $("#CategoriaID").val(0);
     $("#btnEliminar").hide();
@@ -109,7 +110,7 @@ function GuardarCategoria() {
         url: '../../Categorias/GuardarCategoria',
         // la información a enviar
         // (también es posible utilizar una cadena de datos)
-        data: { categoriaID: categoriaID, descripcion: descripcion1 },
+        data: { categoriaID: categoriaID, descripcion: descripcion1.toUpperCase() },
         // especifica si será una petición POST o GET
         type: 'POST',
         // el tipo de información que se espera de respuesta
@@ -117,12 +118,12 @@ function GuardarCategoria() {
         // código a ejecutar si la petición es satisfactoria;
         // la respuesta es pasada como argumento a la función
         success: function (resultado) {
-            if (resultado) {
+            if (resultado.nonError) {
                 $("#ModalCategoria").modal("hide");
                 BuscarCategorias();
             }
             else {
-                alert("Existe una Categoría con la misma descripción.");
+                $("#lbl-error").text(resultado.msjError);
             }
         },
 
@@ -131,6 +132,8 @@ function GuardarCategoria() {
         // el objeto de la petición en crudo y código de estatus de la petición
         error: function (xhr, status) {
             alert('Disculpe, existió un problema');
+            $("#ModalCategoria").modal("hide");
+            BuscarCategorias();
         }
     });
 }
@@ -150,20 +153,21 @@ function eliminarCategoria() {
         // código a ejecutar si la petición es satisfactoria;
         // la respuesta es pasada como argumento a la función
         success: function (resultado) {
-            if (resultado) {
+            if (resultado.nonError) {
                 $("#ModalCategoria").modal("hide");
                 BuscarCategorias();
             }
             else {
-                $("#ModalCategoria").modal("hide");
-                BuscarCategorias();
+                $("#lbl-error").text(resultado.msjError);
             }
         },
         // código a ejecutar si la petición falla;
         // son pasados como argumentos a la función
         // el objeto de la petición en crudo y código de estatus de la petición
         error: function (xhr, status) {
-            $("#lbl-error").text('Disculpe, existió un problema');
+            alert('Disculpe, existió un problema');
+            $("#ModalCategoria").modal("hide");
+            BuscarCategorias();
         }
     });
 }

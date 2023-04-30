@@ -78,7 +78,7 @@ public class SubCategoriasController : Controller
         return Json(resultado);
     }
 
-    public JsonResult eliminarSubCategoria(int subCategoriaID ,int categoriaID){
+    public JsonResult desabilitarSubCategoria(int subCategoriaID ,int categoriaID){
         bool resultado = false;
             //VALIDACION DE SUBCATEGORIAEXISTENTE
             if(subCategoriaID != 0)
@@ -100,6 +100,33 @@ public class SubCategoriasController : Controller
                             subCategoriaOriginal.SubEliminado = false;
                             _context.SaveChanges();
                             resultado = true;
+                        }
+                    }
+                }
+            }
+        return Json(resultado);
+    }
+
+    public JsonResult eliminarSubCategoria(int subCategoriaID ,int categoriaID){
+        bool resultado = false;
+            //VALIDACION DE SUBCATEGORIAEXISTENTE
+            if(subCategoriaID != 0)
+            {
+                if (categoriaID != 0)
+                {
+                    //BUSCAMOS EN LA TABLA SI EXISTE UNA CON LA MISMO ID
+                    var categoriaOriginal = _context.Categorias.Find(categoriaID);
+                    if (categoriaOriginal?.Eliminado == false)
+                    {
+                        var subCategoriaOriginal = _context.SubCategorias.Find(subCategoriaID);
+                        //SI LA CATEGORIA NO ESTE ELIMINADA PROCEDEMOS A HACERLO
+                        if(subCategoriaOriginal?.SubEliminado == true)
+                        {
+                            _context.SubCategorias.Remove(subCategoriaOriginal);
+                            _context.SaveChanges();
+                            resultado = true;
+                        }else{
+                            resultado = false;
                         }
                     }
                 }

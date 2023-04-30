@@ -28,9 +28,10 @@ public class CategoriasController : Controller
     }
     public JsonResult GuardarCategoria(int categoriaID, string descripcion)
     {
-        bool resultado = false;
+        var resultado = new ValidacionError();
+        resultado.nonError = false;
+        resultado.MsjError = "No se agrego una descripcion";
         if(!string.IsNullOrEmpty(descripcion)){
-
             //SI ES 0 QUIERE DECIR QUE ESTA CREANDO LA CATEGORIA
             if(categoriaID == 0)
             {
@@ -43,7 +44,7 @@ public class CategoriasController : Controller
                     };
                     _context.Add(categoriaGuardar);
                     _context.SaveChanges();
-                    resultado = true;
+                    resultado.nonError = true;
                 }
             }else{
                 //BUSCAMOS EN LA TABLA SI EXISTE CON LA MISMA DESCRIPCION Y DISTINTO ID DE REGISTRO AL QUE ESTAMOS EDITANDO
@@ -54,7 +55,7 @@ public class CategoriasController : Controller
                     if(categoriaEditar != null){
                         categoriaEditar.Descripcion = descripcion;
                         _context.SaveChanges();
-                        resultado = true;
+                        resultado.nonError = true;
                     }
                 }
             }
@@ -62,22 +63,33 @@ public class CategoriasController : Controller
         return Json(resultado);
     }
     public JsonResult eliminarCategoria(int categoriaID){
-        bool resultado = false;
+        var resultado = new ValidacionError();
+        resultado.nonError = false;
+        resultado.MsjError = "No se selecciono ninguna categoria";
+        // bool resultado = false;
             //SI ES DISTINTO A 0 QUIERE DECIR QUE ESTA ELIMINANDO LA CATEGORIA
             if(categoriaID != 0)
             {
-                //BUSCAMOS EN LA TABLA SI EXISTE UNA CON LA MISMO ID
+                //BUSCAMOS EN LA TABLA SI EXISTE UNA CON EL MISMO ID
                 var categoriaOriginal = _context.Categorias.Find(categoriaID);
-                //SI LA CATEGORIA NO ESTE ELIMINADA PROCEDEMOS A HACERLO
-                if(categoriaOriginal?.Eliminado == false)
+                var subCategorias = _context.SubCategorias.Where(SC => SC.CategoriaID == categoriaID && SC.SubEliminado == false).Count();
+                //SI TIENE SUBCATEGORIAS HABILITAS NO PRODECER
+                if (subCategorias == 0)
                 {
-                    categoriaOriginal.Eliminado = true;
-                    _context.SaveChanges();
-                    resultado = true;
+                    //SI LA CATEGORIA NO ESTE ELIMINADA PROCEDEMOS A HACERLO
+                    if(categoriaOriginal?.Eliminado == false)
+                    {
+                        categoriaOriginal.Eliminado = true;
+                        _context.SaveChanges();
+                        resultado.nonError = true;
+                    }else{
+                        categoriaOriginal.Eliminado = false;
+                        _context.SaveChanges();
+                        resultado.nonError= true;
+                    }
                 }else{
-                    categoriaOriginal.Eliminado = false;
-                    _context.SaveChanges();
-                    resultado = true;
+                    resultado.nonError= false;
+                    resultado.MsjError = "Tiene subcategorias habilitadas relacionadas a esta categoria. *primero desilitelas y despues vuelva a intentar*";
                 }
             }
             return Json(resultado);
