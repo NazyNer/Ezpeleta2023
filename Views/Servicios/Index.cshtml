@@ -1,3 +1,59 @@
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Servicio";
+}
+
+<!-- Modal -->
+<div class="modal fade" id="ModalServicio" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregar Categoria</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="ServicioID" value="0" />
+        <input type="hidden" id="SubCategoriaID" value="0" />
+        <div>
+            <label class="control-label">Servicio</label>
+            <input type="text" class="form-control" id="Descripcion" autocomplete="off" onkeyup="this.value = this.value.toUpperCase()"/>
+            <label class="control-label">Subcategoria</label>
+            @Html.DropDownList("SubCategoriaID", null, htmlAttributes: new { @class = "form-control" })
+            <label style="color: red;" id="Label-Error" ></label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <input id="btnGuardar" type="button" onclick="GuardarServicio()" class="btn btn-primary" value="Guardar Cambios" />
+        <input id="btnDesabilitar" type="button" onclick="desabilitarServicio()" class="btn btn-danger" value="Desabilitar" />
+        <input id="btnHabilitar" type="button" onclick="desabilitarServicio()" class="btn btn-success" value="Habilitar" />
+        <input id="btnEliminar" type="button" onclick="eliminarServicio()" class="btn btn-warning" value="Eliminar" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+    <h1 class="display-4">Servicio</h1>
+
+      <!-- Button trigger modal -->
+      <div class="mb-2">
+        <button type="button" onclick="VaciarFormulario()" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalServicio">
+            Nuevo
+        </button>
+      </div>
+
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+        <tr>
+            <th>Servicio</th>
+            <th>SubCategoria</th>
+        </tr>
+    </thead>
+        <tbody id="tbody-servicio">        
+        </tbody>
+  </table>
+</div>
+
+@section Scripts{
+    <script src="~/js/servicio-1.0.0.js"></script>
 }

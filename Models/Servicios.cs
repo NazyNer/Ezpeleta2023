@@ -9,7 +9,7 @@ public class Servicios{
   public string? Direccion { get; set; }
   public int Telefono { get; set; }
   public int SubCategoriaID { get; set; }
-
+  public string? SubDescripcion { get; set; }
   public bool Desabilitado { get; set; }
   public virtual SubCategorias? SubCategorias { get; set; }
 }
