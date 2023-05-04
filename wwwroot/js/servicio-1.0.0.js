@@ -22,15 +22,16 @@ function BuscarServicios() {
         dataType: 'json',
         // código a ejecutar si la petición es satisfactoria;
         // la respuesta es pasada como argumento a la función
-        success: function (servicio) {
+        success: function (Servicios) {
             tBody.empty();
-            $.each(subCategorias, function (index, servicios) {
-                console.log(servicios);
-                if (servicios.desabilitado) {
+            $.each(servicios, function (index, servicio) {
+                console.log(servicio);
+                if (servicio.desabilitado) {
                     tBody.append(`
                     <tr class="table-danger">
-                        <td> <a class="btn btn-warning btn-sm" onClick="EditarServicios(${servicios.serviciosID})" role="button">${subCategoria.subDescripcion}</a></td>
-                        <td> <a class="btn btn-warning btn-sm" onClick="EditarSubCategoria(${servicios.serviciosID})" role="button">${subCategoria.SubDescripcion}</a></td>
+                        <td> <a class="btn btn-warning btn-sm" onClick="EditarServicios(${servicio.serviciosID})" role="button">${subCategoria.subDescripcion}</a></td>
+                        <td> ${subCategoria.SubDescripcion}</td>
+                        <td> <a class="btn btn-warning btn-sm" onClick="EditarSubCategoria(${servicio.serviciosID})" role="button">${subCategoria.SubDescripcion}</a></td>
                     </tr>`);
                 } else {
                     tBody.append(`

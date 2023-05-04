@@ -4,6 +4,7 @@ using Ezpeleta2023.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ezpeleta2023.Migrations.Ezpeleta2023Db
 {
     [DbContext(typeof(Ezpeleta2023DbContext))]
-    partial class Ezpeleta2023DbContextModelSnapshot : ModelSnapshot
+    [Migration("20230504004625_ServioIndex")]
+    partial class ServioIndex
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
