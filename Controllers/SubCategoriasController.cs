@@ -17,23 +17,23 @@ public class SubCategoriasController : Controller
     }
     public IActionResult Index()
     {
-        var categoria = _context.Categorias.Where(p => p.Eliminado == false).ToList();
-        ViewBag.CategoriaID = new SelectList(categoria.OrderBy(p => p.Descripcion), "CategoriaID", "Descripcion");
+        var categoria = _context.Categorias?.Where(p => p.Eliminado == false).ToList();
+        ViewBag.CategoriaID = new SelectList(categoria?.OrderBy(p => p.Descripcion), "CategoriaID", "Descripcion");
         return View();
     }
 
     public JsonResult BuscarSubCategorias(int subCategoriaId = 0)
     {
-        var subCategorias = _context.SubCategorias.ToList();
+        var subCategorias = _context.SubCategorias?.ToList();
         if(subCategoriaId > 0 ){
-            subCategorias = subCategorias.Where(c => c.SubCategoriaID == subCategoriaId).OrderBy(c => c.SubDescripcion).ToList();
+            subCategorias = subCategorias?.Where(c => c.SubCategoriaID == subCategoriaId).OrderBy(c => c.SubDescripcion).ToList();
         }
         return Json(subCategorias);
     }
     public JsonResult GuardarSubCategoria(int subCategoriaId, string descripcion, int categoriaID){
         bool resultado = false;
         if(!string.IsNullOrEmpty(descripcion)){
-            var Categoria = _context.Categorias.Where(c => c.CategoriaID == categoriaID).FirstOrDefault();
+            var Categoria = _context.Categorias?.Where(c => c.CategoriaID == categoriaID).FirstOrDefault();
             if (Categoria != null)
             {
                 //VERIFICAMOS QUE LA CATEGORIA NO ESTE ELIMINADA
@@ -43,7 +43,7 @@ public class SubCategoriasController : Controller
                     if(subCategoriaId == 0)
                     {
                         //BUSCAMOS EN LA TABLA SI EXISTE UNA CON LA MISMA DESCRIPCION
-                        var subCategoriaOriginal = _context.SubCategorias.Where(c => c.SubDescripcion == descripcion).FirstOrDefault();
+                        var subCategoriaOriginal = _context.SubCategorias?.Where(c => c.SubDescripcion == descripcion).FirstOrDefault();
                         if(subCategoriaOriginal == null){
                             //DECLARAMOS EL OBJETO DADO EL VALOR
                             var subCategoriaGuardar = new SubCategorias{
@@ -57,10 +57,10 @@ public class SubCategoriasController : Controller
                         }
                     }else{
                         //BUSCAMOS EN LA TABLA SI EXISTE CON LA MISMA DESCRIPCION Y DISTINTO ID DE REGISTRO AL QUE ESTAMOS EDITANDO
-                        var subCategoriaOriginal = _context.SubCategorias.Where(c => c.SubDescripcion == descripcion && c.SubCategoriaID != subCategoriaId && c.CategoriaID == categoriaID).FirstOrDefault();
+                        var subCategoriaOriginal = _context.SubCategorias?.Where(c => c.SubDescripcion == descripcion && c.SubCategoriaID != subCategoriaId && c.CategoriaID == categoriaID).FirstOrDefault();
                         if(subCategoriaOriginal == null){
                             //CREAR VARIABLE QUE GUARDE EL OBJETO SEGUN EL ID DESEADO
-                            var subCategoriaEditar = _context.SubCategorias.Find(subCategoriaId);
+                            var subCategoriaEditar = _context.SubCategorias?.Find(subCategoriaId);
                             if(subCategoriaEditar != null){
                                 subCategoriaEditar.SubDescripcion = descripcion;
                                 subCategoriaEditar.CategoriaID = categoriaID;

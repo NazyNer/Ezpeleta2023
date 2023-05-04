@@ -16,6 +16,10 @@
         <div>
             <label class="control-label">Servicio</label>
             <input type="text" class="form-control" id="Descripcion" autocomplete="off" onkeyup="this.value = this.value.toUpperCase()"/>
+            <label class="control-label">Direccion</label>
+            <input type="text" class="form-control" id="Direccion" autocomplete="off" onkeyup="this.value = this.value.toUpperCase()"/>
+            <label class="control-label">Telefono</label>
+            <input type="text" class="form-control" id="Telefono" autocomplete="off" onkeyup="this.value = this.value.toUpperCase()"/>
             <label class="control-label">Subcategoria</label>
             @Html.DropDownList("subCategoriaID", null, htmlAttributes: new { @class = "form-control" })
             <label style="color: red;" id="Label-Error" ></label>

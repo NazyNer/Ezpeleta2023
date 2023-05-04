@@ -2,7 +2,7 @@ html {
   font-size: 14px;
 }
 .fondo{
-  background-image: url(../img/fondo.jpg);
+  background-image: url(../img/fondo-dark.jpg);
   background-size: cover;
   background-position: 40%;
   width: 100vw;

@@ -18,9 +18,10 @@ function BuscarSubCategorias() {
         // código a ejecutar si la petición es satisfactoria;
         // la respuesta es pasada como argumento a la función
         success: function (subCategorias) {
+            console.log(subCategorias);
             $("#tbody-sub-categorias").empty();
             $.each(subCategorias, function (index, subCategoria) {
-                console.log(subCategoria.subEliminado);
+                console.log(subCategoria);
                 if (subCategoria.subEliminado) {
                     $("#tbody-sub-categorias").append(`
                     <tr class="table-danger">
